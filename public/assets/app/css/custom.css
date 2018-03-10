@@ -1,0 +1,32 @@
+#menu-game-name,#logo-text{
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #f1f2f7;
+}
+
+.modal {
+    display: none;
+    padding-right: 17px;
+}
+
+.u-search-select-label {
+    max-width: 100px;
+    min-width: 80px;
+    width: 100%;
+}
+
+.u-search-select-label-2 {
+    width: 50px;
+}
+
+.u-search-select-label-3 {
+    width: 70px;
+}
+
+.u-hide, .flarv-dialog{
+    display: none;
+}
+
+.u-flarv-label {
+    color: #f1f2f7;
+}
