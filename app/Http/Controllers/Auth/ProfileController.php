@@ -64,6 +64,7 @@ class ProfileController extends Controller
         }
         $this->params['password'] = bcrypt($this->params['new_password']);
         if ($this->repository->edit($this->params, [])){
+	        Auth::logout(); // 用户登出
             // 退出登录
             if (isset($this->params['clear']) && $this->params['clear'] == 1) {
 	            return $this->responseWithJsonSuccess(['redirect' => '/login']);

@@ -30,41 +30,71 @@
                 <span class="m-menu__arrow">
                 </span>
                 <ul class="m-menu__subnav">
-                    @if(Admin::hasRole('company'))
-                    <li class="m-menu__item" aria-haspopup="true">
-                        <a href="/admin/promotion/link/index" class="m-menu__link ">
-                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                <span>
+                    @if(Admin::hasRole('admin') || Admin::hasRole('person') || Admin::hasRole('agent'))
+                        <li class="m-menu__item" aria-haspopup="true">
+                            <a href="/admin/promotion/link/index" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                    <span>
+                                    </span>
+                                </i>
+                                <span class="m-menu__link-text">
+                                    地推链接管理
                                 </span>
-                            </i>
-                            <span class="m-menu__link-text">
-                                地推链接管理
-                            </span>
-                        </a>
-                    </li>
+                            </a>
+                        </li>
                     @endif
                     @if(Admin::hasRole('company_admin'))
-                    <li class="m-menu__item" aria-haspopup="true">
-                        <a href="/admin/promotion/company/index" class="m-menu__link ">
-                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                <span>
+                        <li class="m-menu__item" aria-haspopup="true">
+                            <a href="/admin/promotion/support/index" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    客服人员管理
                                 </span>
-                            </i>
-                            <span class="m-menu__link-text">
-                                地推公司管理
-                            </span>
-                        </a>
-                    </li>
+                            </a>
+                        </li>
+                        <li class="m-menu__item" aria-haspopup="true">
+                            <a href="/admin/promotion/company/index" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    地推公司管理
+                                </span>
+                            </a>
+                        </li>
+                    @endif
+                    @if(Admin::hasRole('company'))
+                        <li class="m-menu__item" aria-haspopup="true">
+                            <a href="/admin/promotion/agent/index" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    代理管理
+                                </span>
+                            </a>
+                        </li>
+                    @endif
+                    @if(Admin::hasRole('agent'))
+                        <li class="m-menu__item" aria-haspopup="true">
+                            <a href="/admin/promotion/person/index" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    推广人管理
+                                </span>
+                            </a>
+                        </li>
                     @endif
                     <li class="m-menu__item" aria-haspopup="true">
                         <a href="/admin/promotion/statistics/index" class="m-menu__link ">
-                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                <span>
-                                </span>
-                            </i>
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
                             <span class="m-menu__link-text">
-                                链接激活统计
+                                推广效果统计
                             </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/admin/promotion/reward/index" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                        <span class="m-menu__link-text">
+                            个人酬金
+                        </span>
                         </a>
                     </li>
                 </ul>

@@ -2,8 +2,11 @@
 
 namespace App\Exceptions;
 
+use App\Http\Controllers\ResponseWithCode;
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -25,6 +28,16 @@ class Handler extends ExceptionHandler
         'password',
         'password_confirmation',
     ];
+
+	protected $customRender = [
+		ValidationException::class => [
+			'render' => 'renderValidationException',
+			'report' => ''
+		],
+		AuthenticationException::class => [
+			'render' => 'renderAuthenticationException'
+		]
+	];
 
     /**
      * Report or log an exception.
@@ -48,21 +61,33 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
-//
-//	    if($e instanceof ModelNotFoundException){
-//		    if($request->ajax()){
-//			    return response()->json(['ret'=>'ERROR','message'=>'Model Not Found'],404);
-//		    }
-//		    return response()->view('errors.404',[],404);
+	    // 调试模式返回原生异常调用栈
+//	    if (!config('app.debug')) {
+//		    return parent::render($request, $exception);
 //	    }
-//	    if($e instanceof TokenMismatchException){
-//		    if($request->ajax()){
-//			    return response()->json(['ret'=>'ERROR','message'=>'Token Mismatch'],400);
-//		    }
-//		    \Flash::error('表单重复提交，请刷新页面再试！');
-//		    return \Redirect::back()->withInput()->withErrors('表单重复提交，请刷新页面再试！');
-//	    }
-//	    return parent::render($request, $e);
+
+	    // 如果定义了该异常处理，则自定义异常处理方法
+	    $renderMethod = $this->customRender[get_class($exception)]['render'] ?? '';
+	    if ($renderMethod && method_exists($this, $renderMethod)) {
+		    return $this->$renderMethod($request, $exception);
+	    }
+
+	    return parent::render($request, $exception);
     }
+
+	public function renderValidationException($request, ValidationException $exception)
+	{
+		if ($request->expectsJson()) {
+			return ResponseWithCode::fail($exception->errors(), ResponseWithCode::PARAM_INVALID);
+		}
+//		return response()->view('errors.404',[],404);
+		return parent::render($request, $exception);
+	}
+
+	public function renderAuthenticationException($request, AuthenticationException $exception)
+	{
+		return $request->expectsJson()
+			? response()->json(['message' => $exception->getMessage()], 401)
+			: redirect()->guest(route('login'));
+	}
 }

@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ResponseWithCode;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
 
 class LoginController extends Controller
 {
@@ -28,7 +29,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+//        $this->middleware('guest')->except('logout');
     }
 
     /**
@@ -51,22 +52,24 @@ class LoginController extends Controller
         return view('snippet.login', $view_data);
     }
 
-    public function ajaxLogin() {
-        if (Auth::attempt([
-            'username' => Request::input('username'),
-            'password' => Request::input('password'),
-        ], Request::input('remember'))) {
-            return $this->responseWithJsonSuccess(['redirectTo' => '/admin/home']);
-        }
-        return $this->responseWithJsonFail(1001, 'fail');
-    }
+	/**
+	 * 用户已经认证成功之后的回调
+	 * @param Request $request
+	 * @param $user
+	 * @return bool|\Illuminate\Http\JsonResponse
+	 */
+	protected function authenticated(Request $request, $user)
+	{
+		// 如果是ajax请求，返回json格式
+		if ($request->expectsJson()) {
+			return ResponseWithCode::success(['redirectTo' => $this->redirectTo()]);
+		}
+		return false;
+	}
 
-    public function redirectTo (){
-        if (Request::ajax()) {
-            return $this->responseWithJsonSuccess(['redirectTo' => '/admin/home']);
-        }
-        else {
-            return '/admin/home';
-        }
+    public function redirectTo()
+    {
+	    $redirectUrl = '/admin/promotion/statistics/index';
+	    return $redirectUrl;
     }
 }

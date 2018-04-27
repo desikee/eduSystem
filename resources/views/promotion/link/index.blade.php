@@ -5,7 +5,7 @@
 @endsection
 
 @section('script')
-<script src="/assets/app/js/link.js" type="text/javascript"></script>
+<script src="/assets/app/js/link/link.js" type="text/javascript"></script>
 <script src="/assets/vendors/custom/qrcode/jqueryqr.js" type="text/javascript"></script>
 @endsection
 
@@ -72,6 +72,7 @@
                     <div class="row align-items-center">
                         <div class="col-xl-8 order-2 order-xl-1">
                             <div class="form-group m-form__group row align-items-center">
+                                @if(Admin::hasRole('admin'))
                                 <div class="col-md-4">
                                     <div class="m-form__group m-form__group--inline">
                                         <div class="m-form__label">
@@ -112,6 +113,7 @@
                                     </div>
                                     <div class="d-md-none m--margin-bottom-10"></div>
                                 </div>
+                                @endif
                                 <div class="col-md-4">
                                     <div class="m-form__group m-form__group--inline">
                                         <div class="m-form__label">
@@ -173,7 +175,7 @@
         <form class="m-form m-form--fit m-form--label-align-right" id="flarv-dialog-new">
             <div class="m-portlet__body">
                 <div class="form-group m-form__group row">
-                    <label for="link_name" class="col-4 col-form-label">
+                    <label for="link_name" class="col-3 col-formval(da-label">
                         链接名称
                     </label>
                     <div class="col-8">
@@ -181,7 +183,7 @@
                     </div>
                 </div>
                 <div class="form-group m-form__group row">
-                    <label for="person_name" class="col-4 col-form-label">
+                    <label for="person_name" class="col-3 col-formval(da-label">
                         链接拥有人
                     </label>
                     <div class="col-8">
@@ -189,7 +191,7 @@
                     </div>
                 </div>
                 <div class="form-group m-form__group row">
-                    <label for="action_name" class="col-4 col-form-label">
+                    <label for="action_name" class="col-3 col-formval(da-label">
                         活动名称
                     </label>
                     <div class="col-8">
@@ -197,7 +199,7 @@
                     </div>
                 </div>
                 <div class="form-group m-form__group row">
-                    <label for="transport" class="col-4 col-form-label">
+                    <label for="transport" class="col-3 col-formval(da-label">
                         自定义参数
                     </label>
                     <div class="col-8">

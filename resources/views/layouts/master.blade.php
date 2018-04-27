@@ -9,10 +9,15 @@
     <meta name="description" content="Initialized with local json data">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    @if(config('app.debug'))
     <link href="/assets/vendors/base/vendors.bundle.css" rel="stylesheet" type="text/css" />
     <link href="/assets/demo/default/base/style.bundle.css" rel="stylesheet" type="text/css" />
-    <!--end::Base Styles -->
+    @else
+        <link href="/assets/vendors/base/vendors.bundle.min.css" rel="stylesheet" type="text/css" />
+        <link href="/assets/demo/default/base/style.bundle.min.css" rel="stylesheet" type="text/css" />
+    @endif
 
+    <!--end::Base Styles -->
     <link rel="shortcut icon" href="/assets/demo/default/media/img/logo/favicon.ico" />
 
     <link href="/assets/vendors/custom/flavr/flavr.css" rel="stylesheet" type="text/css" />
@@ -127,8 +132,13 @@
     <!-- end::Quick Sidebar -->
 
     <!--begin::Base Scripts -->
+    @if(config('app.debug'))
     <script src="/assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>
     <script src="/assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
+    @else
+        <script src="/assets/vendors/base/vendors.bundle.min.js" type="text/javascript"></script>
+        <script src="/assets/demo/default/base/scripts.bundle.min.js" type="text/javascript"></script>
+    @endif
     <script src="/assets/vendors/custom/flavr/flavr.js" type="text/javascript"></script>
     <!--end::Base Scripts -->
 

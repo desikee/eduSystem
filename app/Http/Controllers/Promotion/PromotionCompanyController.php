@@ -2,12 +2,16 @@
 
 namespace app\Http\Controllers\Promotion;
 
-
 use App\Http\Controllers\Controller;
 use App\Repositories\Promotion\PromotionCompanyRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * 地推公司管理相关控制器
+ * Class PromotionCompanyController
+ * @package app\Http\Controllers\Promotion
+ */
 class PromotionCompanyController extends Controller
 {
 
@@ -16,15 +20,15 @@ class PromotionCompanyController extends Controller
 		parent::__construct($repository, $request);
 	}
 
-	public function index() {
-	    $channels = $this->repository->getChannels();
-		return view('promotion.company.index', [
-		    'channels' => $channels,
+	public function index()
+	{
+		return view('promotion.user.company', [
             'search_select' => $this->repository->getSearchSelect()
         ]);
 	}
 
-	public function getList() {
+	public function getList()
+	{
 		$rules = [
 			'datatable.pagination.page' => 'required',
 			'datatable.pagination.perpage' => 'required',
@@ -35,7 +39,7 @@ class PromotionCompanyController extends Controller
 		}
 
 		$query = $this->params['datatable']['query'] ?? [];
-		$queryColumn = ['usernameSearch'];
+		$queryColumn = ['usernameSearch', 'channel_id', 'company'];
 		foreach ($query as $key => $value) {
 			// 过滤掉非允许查询字段以及空查询字段
 			if (!in_array($key, $queryColumn) || empty($value)){
@@ -50,10 +54,15 @@ class PromotionCompanyController extends Controller
 		);
 	}
 
-	public function add() {
+	public function getChannel()
+	{
+		return $this->repository->getChannel();
+	}
+
+	public function add()
+	{
 		$rules = [
 			'username' => 'required|string|max:255|unique:user',
-            'channel_id' => 'required|string',
             'game_id' => 'required|numeric',
 			'email' => 'required|string|email|max:255|unique:user',
 			'company' => 'required|string'
@@ -71,7 +80,8 @@ class PromotionCompanyController extends Controller
 		return $this->responseWithJsonFail($this->repository->getErrorMessage());
 	}
 
-    public function edit() {
+    public function edit()
+    {
         $rules = [
             'id' => 'required|numeric',
             'channel_id' => 'required|string',
@@ -89,7 +99,8 @@ class PromotionCompanyController extends Controller
         return $this->responseWithJsonFail($this->repository->getErrorMessage());
     }
 
-	public function reset() {
+	public function reset()
+	{
 		$rules = [
 			'id' => 'required|numeric',
 		];
@@ -103,7 +114,8 @@ class PromotionCompanyController extends Controller
 		return $this->responseWithJsonFail($this->repository->getErrorMessage());
 	}
 
-	public function delete() {
+	public function delete()
+	{
 		$rules = [
 			'id' => 'required|numeric',
 		];

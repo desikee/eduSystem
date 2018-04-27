@@ -2,12 +2,17 @@
 
 namespace app\Http\Controllers\Promotion;
 
-
+use App\Facades\Admin;
 use App\Http\Controllers\Controller;
 use App\Repositories\Promotion\PromotionStatisticsRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * 激活统计相关
+ * Class PromotionStatisticsController
+ * @package app\Http\Controllers\Promotion
+ */
 class PromotionStatisticsController extends Controller
 {
 
@@ -17,14 +22,17 @@ class PromotionStatisticsController extends Controller
 	}
 
 	public function index() {
-	    $total = $this->repository->getTotal();
-		return view('promotion.statistics.index', [
-		    'total' => $total
-        ]);
+		$view = 'promotion.statistics.' . Admin::getRole()->name;
+		// 如果没有自定义角色地图，使用默认
+		if (!view()->exists($view)) {
+			$view = 'promotion.statistics.person';
+		}
+		return view($view);
 	}
 
 	public function getList() {
 		$rules = [
+			'datatable.game_id' => 'required|numeric',
 			'datatable.pagination.page' => 'required',
 			'datatable.pagination.perpage' => 'required',
 		];
@@ -41,34 +49,18 @@ class PromotionStatisticsController extends Controller
 				unset($query[$key]);
 			}
 		}
+		// 游戏id参数
+		$query['game_id'] = $this->params['datatable']['game_id'];
 
-		return $this->repository->getList(
-			$query,
-			$this->params['datatable']['pagination']['perpage'],
-			$this->params['datatable']['pagination']['page']
-		);
-	}
-
-	public function getListTotal() {
-		$rules = [
-			'datatable.pagination.page' => 'required',
-			'datatable.pagination.perpage' => 'required',
-		];
-		$validator = Validator::make($this->params, $rules);
-		if ($validator->fails()) {
-			$this->responseWithJsonFail($validator->errors()->messages());
+		switch(Admin::getRole()->name) {
+			case 'admin': $method = 'getListByAdmin';break;
+			case 'person' : $method = 'getListByPerson';break;
+			case 'agent' : $method = 'getListByAgent';break;
+			case 'company' : $method = 'getListByCompany';break;
+			case 'company_admin'; $method = 'getListByCompanyAdmin';break;
+			default: $method = 'getListByPerson';
 		}
-
-		$query = $this->params['datatable']['query'] ?? [];
-		$queryColumn = [];
-		foreach ($query as $key => $value) {
-			// 过滤掉非允许查询字段以及空查询字段
-			if (!in_array($key, $queryColumn) || empty($value)){
-				unset($query[$key]);
-			}
-		}
-
-		return $this->repository->getListTotal(
+		return $this->repository->$method(
 			$query,
 			$this->params['datatable']['pagination']['perpage'],
 			$this->params['datatable']['pagination']['page']

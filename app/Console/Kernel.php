@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\PlayerPayCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,6 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
+	    PlayerPayCommand::class
         //
     ];
 
@@ -24,6 +26,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+	    // 每天午夜更新一次
+	    $schedule->command('statistics:player_pay')
+		    ->dailyAt('6:30');
         // $schedule->command('inspire')
         //          ->hourly();
     }

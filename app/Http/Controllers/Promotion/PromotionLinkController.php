@@ -2,7 +2,7 @@
 
 namespace app\Http\Controllers\Promotion;
 
-
+use App\Facades\Admin;
 use App\Http\Controllers\Controller;
 use App\Repositories\Promotion\PromotionLinkRepository;
 use Illuminate\Http\Request;
@@ -19,7 +19,17 @@ class PromotionLinkController extends Controller
 	public function index()
 	{
 		$search_select = $this->repository->getSearchSelect();
-        return view('promotion.link.index',[
+		$role = Admin::getRole();
+
+		switch($role->name) {
+			case 'admin' : $view = 'promotion.link.index';break;
+			case 'person' : $view = 'promotion.link.person';break;
+			case 'agent' : $view = 'promotion.link.agent';break;
+			default: $view = 'home';
+		}
+
+        return view($view,[
+	        'down_users' => Admin::getDirectDownUsers(),
 	        'search_select' => $search_select
         ]);
     }
@@ -56,8 +66,8 @@ class PromotionLinkController extends Controller
 	    $rules = [
 		    'game_id' => 'required|numeric',
 		    'link_name' => 'required|string',
-		    'person_name' => 'required|string',
 		    'action_name' => 'required|string',
+		    'user_id' => 'required|numeric',
 		    'transport' => '',
 	    ];
 	    $validator = Validator::make($this->params, $rules);
@@ -78,10 +88,14 @@ class PromotionLinkController extends Controller
 	    $rules = [
 		    'id' => 'required|numeric',
 		    'link_name' => 'required|string',
-		    'person_name' => 'required|string',
+//		    'user_id' => 'required|numeric', // 链接拥有人不能修改
 		    'action_name' => 'required|string',
 		    'transport' => '',
 	    ];
+	    // 非管理员关闭链接编辑
+	    if (!Admin::hasRole('admin')) {
+		    return $this->responseWithJsonFail('链接编辑已被禁用');
+	    }
 	    $validator = Validator::make($this->params, $rules);
 	    if ($validator->fails()) {
 		    $this->responseWithJsonFail($validator->errors()->messages());

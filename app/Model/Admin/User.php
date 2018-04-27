@@ -55,10 +55,19 @@ class User extends Authenticatable
 	 */
 	public function getParentUserAttribute()
 	{
+		return $this->parent()->username ?? 'None';
+	}
+
+	/**
+	 * 获取直接上级
+	 * @return string
+	 */
+	public function parent()
+	{
 		if ($this->parent_id > 0) {
-			return $this->find($this->parent_id)->username;
+			return $this->find($this->parent_id);
 		} else {
-			return 'None';
+			return null;
 		}
 	}
 
