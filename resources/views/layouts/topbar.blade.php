@@ -2,7 +2,6 @@
 <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
     <div class="m-stack__item m-topbar__nav-wrapper">
         <ul class="m-topbar__nav m-nav m-nav--inline">
-            <!--
             <li class="m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-center m-dropdown--mobile-full-width m-dropdown--skin-light	m-list-search m-list-search--skin-light"
                 data-dropdown-toggle="click" data-dropdown-persistent="true" id="m_quicksearch"
                 data-search-type="dropdown">
@@ -197,14 +196,14 @@
                                                 <i class="m-nav-grid__icon flaticon-file">
                                                 </i>
                                                 <span class="m-nav-grid__text">
-                                                    添加新链接
+                                                    添加新学员
                                                 </span>
                                             </a>
                                             <a href="#" class="m-nav-grid__item">
                                                 <i class="m-nav-grid__icon flaticon-time">
                                                 </i>
                                                 <span class="m-nav-grid__text">
-                                                    添加新游戏
+                                                    查看学员进度
                                                 </span>
                                             </a>
                                         </div>
@@ -220,7 +219,7 @@
                                                 <i class="m-nav-grid__icon flaticon-clipboard">
                                                 </i>
                                                 <span class="m-nav-grid__text">
-                                                    查看链接列表
+                                                    查看结项学员
                                                 </span>
                                             </a>
                                         </div>
@@ -231,7 +230,6 @@
                     </div>
                 </div>
             </li>
-            -->
             <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img  m-dropdown m-dropdown--medium m-dropdown--arrow m-dropdown--header-bg-fill m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light"
                 data-dropdown-toggle="click">
                 <a href="/admin/profile/index" class="m-nav__link m-dropdown__toggle" data-user_id="{{ Auth::getUser()->id }}" id="u-user">

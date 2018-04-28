@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth', 'log'], 'prefix' => 'admin', 'as' => 'adm
 
     Route::group(['prefix' => 'profile', 'as' => 'profile', 'namespace' => 'Auth'], function() {
         Route::get('index', 'ProfileController@index');
+        Route::get('password', 'ProfileController@password');
         Route::post('modify_password', 'ProfileController@modify_password');
         Route::post('update_profile', 'ProfileController@update_profile');
     });

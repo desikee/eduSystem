@@ -4,11 +4,14 @@
         <div class="m-stack m-stack--flex-tablet-and-mobile m-stack--ver m-stack--desktop">
             <div class="m-stack__item m-stack__item--left m-stack__item--middle m-stack__item--last">
                 <span class="m-footer__copyright">
-                    Copyright &copy; 2017
-                    <a href="http://idreamsky.com" class="m-link">
-                        idreamsky
+                    Copyright &copy; 2018
+                    <a href="http://desikee.com/" class="m-link">
+                        毕昇教育
                     </a>
-                    ,Powered By rumi.zhao
+                    ,Powered By
+                    <a href="http://uusama.com" class="m-link">
+                        uusama
+                    </a>
                 </span>
             </div>
             <div class="m-stack__item m-stack__item--right m-stack__item--middle m-stack__item--first">

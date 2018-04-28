@@ -21,6 +21,16 @@ class ProfileController extends Controller
         return view('auth.profile');
     }
 
+    public function profile()
+    {
+        return view('auth.profile');
+    }
+
+    public function password()
+    {
+        return view('auth.password');
+    }
+
 	public function update_profile() {
         $rules = [
             'id' => 'required|numeric',

@@ -1,7 +1,12 @@
-#menu-game-name,#logo-text{
+#logo-text{
     font-size: 1.5rem;
     font-weight: 500;
     color: #f1f2f7;
+}
+
+#logo-text-a:hover
+{
+    text-decoration: none;
 }
 
 .modal {

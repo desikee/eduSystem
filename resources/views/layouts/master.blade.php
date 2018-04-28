@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>
-        地推系统管理后台
+        毕昇教育管理系统
     </title>
     <meta name="description" content="Initialized with local json data">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,6 +21,7 @@
     <link rel="shortcut icon" href="/assets/demo/default/media/img/logo/favicon.ico" />
 
     <link href="/assets/vendors/custom/flavr/flavr.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/app/css/custom.css" rel="stylesheet" type="text/css" />
     <!--begin::Extend Styles -->
     @yield('stylesheet')
     <!--end::Extend Styles -->
@@ -39,9 +40,9 @@
                     <div class="m-stack__item m-brand  m-brand--skin-dark ">
                         <div class="m-stack m-stack--ver m-stack--general">
                             <div class="m-stack__item m-stack__item--middle m-brand__logo">
-                                <a href="#" class="m-brand__logo-wrapper">
+                                <a href="#" class="m-brand__logo-wrapper" id="logo-text-a">
                             <span id="logo-text">
-                                MagicInstall
+                                毕昇教育
                             </span>
                                 </a>
                             </div>
