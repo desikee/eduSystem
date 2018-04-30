@@ -139,6 +139,25 @@ Route::group(['middleware' => ['auth', 'log'], 'prefix' => 'admin', 'as' => 'adm
         });
     });
 
+    // 学员管理相关路由
+    Route::group(['prefix' => 'student', 'as' => 'student.', 'namespace' => 'Student'], function() {
+        Route::group(['prefix' => 'progress', 'as' => 'progress.'], function() {
+            Route::get('index', ['as' => 'index', 'uses' => 'StudentProgressController@index']);
+            Route::match(['get', 'post'], 'getList', ['as' => 'getList', 'uses' => 'StudentProgressController@getList']);
+            Route::post('add', ['as' => 'add', 'uses' => 'StudentProgressController@add']);
+            Route::post('edit', ['as' => 'edit', 'uses' => 'StudentProgressController@edit']);
+            Route::post('delete', ['as' => 'add', 'uses' => 'StudentProgressController@delete']);
+        });
+
+        Route::group(['prefix' => 'complete', 'as' => 'complete.'], function() {
+            Route::get('index', ['as' => 'index', 'uses' => 'StudentCompleteController@index']);
+            Route::match(['get', 'post'], 'getList', ['as' => 'getList', 'uses' => 'StudentCompleteController@getList']);
+            Route::post('add', ['as' => 'add', 'uses' => 'StudentCompleteController@add']);
+            Route::post('edit', ['as' => 'edit', 'uses' => 'StudentCompleteController@edit']);
+            Route::post('delete', ['as' => 'add', 'uses' => 'StudentCompleteController@delete']);
+        });
+    });
+
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
