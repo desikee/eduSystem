@@ -69,7 +69,7 @@ class LoginController extends Controller
 
     public function redirectTo()
     {
-	    $redirectUrl = '/admin/promotion/statistics/index';
+	    $redirectUrl = '/admin/profile/index';
 //        $redirectUrl = '/admin/home';
         return $redirectUrl;
     }
