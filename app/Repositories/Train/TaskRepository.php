@@ -53,11 +53,14 @@ class TaskRepository extends AbstractRepository{
      * @param $page
      * @return mixed
      */
-	public function getCompleteStudent($query = [], $perpage, $page)
+	public function getCompleteStudentList($query = [], $perpage, $page)
     {
-        $query['status'] = Task::STATUS_DETAIL['complete'];
-        $query['teacher_id'] = Admin::user()->id;
-        return $this->getList($query, $perpage, $page);
+        $student_ids = $this->model->where(['teacher_id' => Admin::user()->id,
+            'status' => Task::STATUS_DETAIL['complete']])->get()->pluck('student_id');
+        return $this->paginate(
+            User::where($query)
+                ->whereIn('id', $student_ids)->get(),
+            $perpage, $page);
     }
 
     public function getProgressStudent()
