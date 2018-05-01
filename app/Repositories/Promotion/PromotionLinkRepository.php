@@ -26,19 +26,30 @@ class PromotionLinkRepository extends AbstractRepository{
 	 */
 	public function getSearchSelect()
 	{
-	    $down_users = Admin::getDownUsers(true);
+	    $down_users = Admin::getDirectDownUsers();
 	    $can_links = $this->model->whereIn('create_id', collect($down_users)->pluck('id'))->get();
 	    return [
 	        'down_users' => $down_users,
-            'action_name' =>$can_links->pluck('action_name'),
+            'action_name' =>$can_links->pluck('action_name')->unique(),
             'user' => User::whereIn('id', $can_links->pluck('user_id'))->get()
         ];
 	}
 
 	public function getList($query = [], $perpage, $page)
 	{
+		// 一般用户只能查看自己使用的链接
+		if (Admin::hasRole('person')) {
+			// 一般用户过滤掉查询条件
+			$action = $query['action'] ?? '';
+			$query = [];
+			$query['user_id'] = Admin::user()->id;
+			$action && $query['action'] = $action;
+		} elseif(!Admin::hasRole('admin')) {  // 其他非管理员只能看到自己创建的链接
+			$query['create_id'] = Admin::user()->id;
+		}
+		$links = $this->model->where($query)->orderBy('id', 'desc')->get();
 		return $this->paginate(
-			$this->model->where($query)->orderBy('id', 'desc')->get(),
+			$links,
 			$perpage, $page
 		);
 	}
@@ -51,6 +62,11 @@ class PromotionLinkRepository extends AbstractRepository{
 	 */
 	public function add($params, $rules = [])
 	{
+		if (LinkBackend::where(['link_name' => $params['link_name']])->first()) {
+			$this->error_message = '该链接名称已被使用';
+			return false;
+		}
+
 		$user = Auth::getUser();
 		$user_game = UserGame::where(['user_id' => $user->id, 'game_id' => $params['game_id']])->first();
 		if (empty($user_game)) {
@@ -59,13 +75,10 @@ class PromotionLinkRepository extends AbstractRepository{
 		}
 		$config = Config::where(['game_id' => $params['game_id'], 'channel_id' => $user_game->channel_id])->first();
 		if (empty($config)) {
-			$this->error_message = 'config record is empty';
+			$this->error_message = '没有可用渠道配置，请找管理人员重新分配渠道号！';
 			return false;
 		}
-		if (LinkBackend::where(['link_name' => $params['link_name']])->first()) {
-			$this->error_message = '该链接名称已被使用';
-			return false;
-		}
+
 		$link_info = [
 			'player_id' => 1,  // 1 代表后台
 			'channel_id' => $user_game->channel_id,
@@ -101,12 +114,12 @@ class PromotionLinkRepository extends AbstractRepository{
 		$link_backend_info = [
 			'mi_link_id' => $link->id,
 			'link_name' => $params['link_name'],
-			'user_id' => $user->id,
+			'create_id' => $user->id,
 			'game_id' => $params['game_id'],
 			'channel_id' => $user_game->channel_id,
 			'appid' => $user_game->appid,
 			'action_name' => $params['action_name'] ?? '',
-			'person_name' => $params['person_name'],
+			'user_id' => $params['user_id'],
 			'short_url' => $link->short_url,
 			'source_url' => $link->source_url,
 			'extend' => $link->extend,

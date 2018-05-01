@@ -181,9 +181,19 @@ abstract class AbstractRepository {
 	 * @return mixed
 	 */
     public function paginate($record, $perpage, $page) {
+	    // 如果每页数据为非正数，则返回所有数据
+	    if ($perpage <= 0){
+		    return $record;
+	    }
         $record = is_array($record) ? $record : $record->toArray();
         $total = count($record);
-	    $offset = ($page - 1) * $perpage;  // 计算其实偏移
+	    $offset = ($page - 1) * $perpage;  // 计算真实偏移
+
+	    // 如果偏移大于总数据量
+	    if ($offset > $total) {
+		    $offset = 0;
+		    $page = 1;
+	    }
 //	    $paginator = new LengthAwarePaginator($record, $total, $perpage, $page);// 使用自定义分页
 	    $result['meta'] = [
 		    'page' => $page,

@@ -9,5 +9,5 @@ class UserGame extends Model{
 
 	public $timestamps = false;
 
-	protected $fillable = ['user_id', 'game_id', 'appid', 'channel_id'];
+	protected $fillable = ['user_id', 'game_id', 'appid', 'channel_id', 'a_ratio', 's_ratio'];
 }

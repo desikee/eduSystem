@@ -6,8 +6,8 @@
             <a href="#" class="m-menu__link m-menu__toggle">
                 <i class="m-menu__link-icon flaticon-add">
                 </i>
-                <span class="m-menu__link-text" data-game_id="11828" id="u-current-game" data-icon_path="http://www.idreamsky.com/files/image/20171219162934_c8bf0.png">
-                    梦幻花园
+                <span class="m-menu__link-text">
+                    学员进度
                 </span>
                 <i class="m-menu__hor-arrow la la-angle-down">
                 </i>
@@ -23,7 +23,7 @@
                             <i class="m-menu__link-icon flaticon-file">
                             </i>
                             <span class="m-menu__link-text">
-                                梦幻花园
+                                xxx
                             </span>
                         </a>
                     </li>
@@ -63,11 +63,11 @@
                             <span class="m-menu__link-title">
                                 <span class="m-menu__link-wrap">
                                     <span class="m-menu__link-text">
-                                        添加新游戏
+                                        添加新学员
                                     </span>
                                     <span class="m-menu__link-badge">
                                         <span class="m-badge m-badge--success">
-                                            开发中
+                                            待完善
                                         </span>
                                     </span>
                                 </span>
@@ -85,7 +85,7 @@
                 <span class="m-menu__link-title">
                     <span class="m-menu__link-wrap">
                         <span class="m-menu__link-text">
-                            MagicInstall
+                            结项学员
                         </span>
                         <span class="m-menu__link-badge">
                             <!--<span class="m-badge m-badge&#45;&#45;brand m-badge&#45;&#45;wide">-->
@@ -108,7 +108,7 @@
                             <i class="m-menu__link-icon flaticon-business">
                             </i>
                             <span class="m-menu__link-text">
-                                MagicInstall
+                                xxx
                             </span>
                         </a>
                     </li>
@@ -117,7 +117,7 @@
                             <i class="m-menu__link-icon flaticon-map">
                             </i>
                             <span class="m-menu__link-text">
-                                statistics
+                                xxx
                             </span>
                         </a>
                     </li>
@@ -128,13 +128,15 @@
                             <span class="m-menu__link-title">
                                 <span class="m-menu__link-wrap">
                                     <span class="m-menu__link-text">
-                                        document
+                                        xxx
                                     </span>
+                                    <!--
                                     <span class="m-menu__link-badge">
                                         <span class="m-badge m-badge--success">
                                             3
                                         </span>
                                     </span>
+                                    -->
                                 </span>
                             </span>
                         </a>

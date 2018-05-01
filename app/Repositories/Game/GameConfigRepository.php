@@ -1,10 +1,12 @@
 <?php
 namespace App\Repositories\Game;
 
+use App\Facades\Admin;
 use App\Model\Admin\LinkBackend;
 use App\Model\Admin\Role;
 use App\Model\Admin\RoleUser;
 use App\Model\Admin\User;
+use App\Model\Admin\UserGame;
 use App\Model\MagicInstall\Config;
 use App\Repositories\Contracts\AbstractRepository;
 use Illuminate\Support\Facades\Auth;
@@ -19,9 +21,29 @@ class GameConfigRepository extends AbstractRepository{
 		$this->model = $model;
 	}
 
+	/**
+	 * 获取当前用户可查看的链接类型
+	 * @return mixed
+	 */
+	public function getSearchSelect()
+	{
+		if (Admin::hasRole('admin')) {
+			$configs = $this->model->all();
+		} else {
+			$configs = $this->model->where(['game_id' => 11828])->get();
+		}
+
+		$search_select = [
+			'game' => $configs->unique('game_id'),
+			'channel' => $configs->unique('channel_id')
+		];
+		return $search_select;
+	}
+
 	public function getList($query = [], $perpage, $page) {
 		$result = $this->model->where($query)->orderBy('id', 'desc')->get();
-		return $this->paginate($this->model->where($query)->orderBy('id', 'desc')->get(),
+		return $this->paginate(
+			$result,
 			$perpage, $page);
 	}
 

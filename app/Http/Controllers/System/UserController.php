@@ -2,7 +2,6 @@
 
 namespace app\Http\Controllers\System;
 
-
 use App\Http\Controllers\Controller;
 use App\Repositories\Admin\UserRepository;
 use Illuminate\Http\Request;

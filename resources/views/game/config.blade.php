@@ -1,11 +1,11 @@
 @extends('layouts.master')
 
 @section('stylesheet')
-    <link href="/assets/app/css/link.css" rel="stylesheet" type="text/css">
+    <link href="/assets/app/css/custom.css" rel="stylesheet" type="text/css">
 @endsection
 
 @section('script')
-    <script src="/assets/app/js/config.js" type="text/javascript"></script>
+    <script src="/assets/app/js/game/config.js" type="text/javascript"></script>
 @endsection
 
 @section('sub-header')
@@ -49,16 +49,6 @@
 
 @section('content')
     <div class="m-content">
-        <!--
-        <div class="m-alert m-alert--icon m-alert--air m-alert--square alert alert-dismissible m--margin-bottom-30" role="alert">
-            <div class="m-alert__icon">
-                <i class="flaticon-technology m--font-accent"></i>
-            </div>
-            <div class="m-alert__text">
-                Datatable initialized from remote JSON source with local(frontend) pagination, column order and search support.
-            </div>
-        </div>
-        -->
         <div class="m-portlet m-portlet--mobile">
             <div class="m-portlet__head">
                 <div class="m-portlet__head-caption">
@@ -81,7 +71,46 @@
                     <div class="row align-items-center">
                         <div class="col-xl-8 order-2 order-xl-1">
                             <div class="form-group m-form__group row align-items-center">
-
+                                <div class="col-md-4">
+                                    <div class="m-form__group m-form__group--inline">
+                                        <div class="m-form__label">
+                                            <label class="u-search-select-label-2">
+                                                游戏：
+                                            </label>
+                                        </div>
+                                        <div class="m-form__control">
+                                            <select class="form-control m-bootstrap-select m-bootstrap-select--solid u-search-select" name="game_id" id="u-search-select-game">
+                                                <option value="">
+                                                    All
+                                                </option>
+                                                @foreach($search_select['game'] as $game)
+                                                    <option value="{{ $game['game_id'] }}">{{ $game['game_name'] }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="d-md-none m--margin-bottom-10"></div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="m-form__group m-form__group--inline">
+                                        <div class="m-form__label">
+                                            <label class="u-search-select-label-2">
+                                                渠道：
+                                            </label>
+                                        </div>
+                                        <div class="m-form__control">
+                                            <select class="form-control m-bootstrap-select m-bootstrap-select--solid u-search-select" name="channel_id" id="u-search-select-channel">
+                                                <option value="">
+                                                    All
+                                                </option>
+                                                @foreach($search_select['channel'] as $channel)
+                                                    <option value="{{ $channel['channel_id'] }}">{{ $channel['channel_name'] }}({{ $channel['channel_id'] }})</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="d-md-none m--margin-bottom-10"></div>
+                                </div>
                                 <!--
                                 <div class="col-md-4">
                                     <div class="m-input-icon m-input-icon--left">
@@ -118,69 +147,14 @@
         </div>
     </div>
 
-    <!-- flarv 模态框-新建 -->
-    <div class="flarv-dialog">
-        <form class="m-form m-form--fit m-form--label-align-right" id="flarv-dialog-new">
-            <div class="m-portlet__body">
-                <div class="form-group m-form__group row">
-                    <label for="game_id" class="col-4 col-form-label">
-                        游戏id
-                    </label>
-                    <div class="col-8">
-                        <input class="form-control m-input" type="text" name="game_id" id="game_id">
-                    </div>
-                </div>
-                <div class="form-group m-form__group row">
-                    <label for="game_name" class="col-4 col-form-label">
-                        游戏名称
-                    </label>
-                    <div class="col-8">
-                        <input class="form-control m-input" type="text" name="game_name" id="game_name">
-                    </div>
-                </div>
-                <div class="form-group m-form__group row">
-                    <label for="channel_id" class="col-4 col-form-label">
-                        渠道id
-                    </label>
-                    <div class="col-8">
-                        <input class="form-control m-input" type="text" name="channel_id" id="channel_id">
-                    </div>
-                </div>
-                <div class="form-group m-form__group row">
-                    <label for="channel_name" class="col-4 col-form-label">
-                        渠道名称
-                    </label>
-                    <div class="col-8">
-                        <input class="form-control m-input" type="text" name="channel_name" id="channel_name">
-                    </div>
-                </div>
-                <div class="form-group m-form__group row">
-                    <label for="link_host" class="col-4 col-form-label">
-                        落地页地址
-                    </label>
-                    <div class="col-8">
-                        <input class="form-control m-input" type="text" name="link_host" id="link_host">
-                    </div>
-                </div>
-                <div class="form-group m-form__group row">
-                    <label for="download_url" class="col-4 col-form-label">
-                        下载地址
-                    </label>
-                    <div class="col-8">
-                        <input class="form-control m-input" type="text" name="download_url" id="download_url">
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
 
-    <!-- 分享链接模态框 -->
-    <div class="modal fade" id="u_modal_share" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <!-- 通用新增模态框 -->
+    <div class="modal fade" id="u-modal" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">
-                        分享链接
+                    <h5 class="modal-title" id="u-modal-title">
+                        新增
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">
@@ -189,37 +163,120 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="m-portlet__body">
-                        <div class="form-group m-form__group row">
-                            <label class="col-3 col-form-label">
-                                链接名称：
-                            </label>
-                            <div class="col-8 col-form-label" id="modal-link_name" style="word-break:break-all">
+                    <form class="m-form m-form--fit m-form--label-align-right" id="u-modal-form">
+                        <div class="m-portlet__body">
+                            <div class="form-group m-form__group row">
+                                <label for="appid" class="col-3 col-form-label">
+                                    appid
+                                </label>
+                                <div class="col-8">
+                                    <input class="form-control m-input" type="text" name="appid" id="appid" value="203">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group m-form__group row">
-                            <label class="col-3 col-form-label">
-                                链接地址：
-                            </label>
-                            <div class="col-md-8 col-form-label" id="modal-source_url" style="word-break:break-all">
+                            <div class="form-group m-form__group row">
+                                <label for="game_id" class="col-3 col-form-label">
+                                    游戏id
+                                </label>
+                                <div class="col-8">
+                                    <input class="form-control m-input" type="text" name="game_id" id="game_id">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-10">
-                            <div id="QRCode">
-
+                            <div class="form-group m-form__group row">
+                                <label for="game_name" class="col-3 col-form-label">
+                                    游戏名称
+                                </label>
+                                <div class="col-8">
+                                    <input class="form-control m-input" type="text" name="game_name" id="game_name">
+                                </div>
                             </div>
+                            <div class="form-group m-form__group row">
+                                <label for="platform" class="col-3 col-form-label">
+                                    平台
+                                </label>
+                                <div class="col-8">
+                                    <input class="form-control m-input" type="text" name="platform" id="platform" value="android">
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label for="channel_id" class="col-3 col-form-label">
+                                    渠道id
+                                </label>
+                                <div class="col-8">
+                                    <input class="form-control m-input" type="text" name="channel_id" id="channel_id">
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label for="channel_name" class="col-3 col-form-label">
+                                    渠道名称
+                                </label>
+                                <div class="col-8">
+                                    <input class="form-control m-input" type="text" name="channel_name" id="channel_name">
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label for="link_host" class="col-3 col-form-label">
+                                    落地页地址
+                                </label>
+                                <div class="col-8">
+                                    <input class="form-control m-input" type="text" name="link_host" id="link_host">
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label for="download_url" class="col-3 col-form-label">
+                                    下载地址
+                                </label>
+                                <div class="col-8">
+                                    <input class="form-control m-input" type="text" name="download_url" id="download_url">
+                                </div>
+                            </div>
+                            @if(Admin::hasRole('admin'))
+                            <div class="form-group m-form__group row">
+                                <label for="scheme" class="col-3 col-form-label">
+                                    scheme
+                                </label>
+                                <div class="col-8">
+                                    <input class="form-control m-input" type="text" name="scheme" id="scheme">
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label for="scheme_host" class="col-3 col-form-label">
+                                    scheme_host
+                                </label>
+                                <div class="col-8">
+                                    <input class="form-control m-input" type="text" name="scheme_host" id="download_url">
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label for="market" class="col-3 col-form-label">
+                                    应用市场地址
+                                </label>
+                                <div class="col-8">
+                                    <input class="form-control m-input" type="text" name="market" id="download_url">
+                                </div>
+                            </div>
+                            <div class="m-form__group form-group row">
+                                <label class="col-3 col-form-label" for="id_default">
+                                    是否默认值
+                                </label>
+                                <div class="col-4">
+                                    <span class="m-switch m-switch--outline m-switch--success">
+                                        <label>
+                                            <input type="checkbox" checked="checked" name="id_default">
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+                            @endif
                         </div>
-                        <div style="display: none;">
-                            <img width="100%" height="100%" src="http://www.idreamsky.com/files/image/20171219162934_c8bf0.png" id="modal-game_icon">
-                        </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
                         关闭
                     </button>
-                    <button type="button" class="btn btn-primary">
-                        确认
+                    <button type="button" class="btn btn-success" data-url="" id="u-modal-submit">
+                        确定
                     </button>
                 </div>
             </div>

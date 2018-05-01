@@ -6,6 +6,7 @@ namespace App\Repositories\Admin;
 use App\Model\Admin\Role;
 use App\Model\Admin\RoleUser;
 use App\Model\Admin\User;
+use App\Model\Admin\UserGame;
 use Illuminate\Support\Facades\Auth;
 
 class AdminRepository
@@ -38,6 +39,30 @@ class AdminRepository
         return $this->app->auth->user();
     }
 
+	/**
+	 * 获取当前用户的指定游戏id的可用渠道id
+	 * @param $game_id
+	 * @return string
+	 */
+	public function getChannelIdByGame($game_id)
+	{
+		$user_game = UserGame::where(['user_id' => $this->user()->id, 'game_id' => $game_id])->first();
+		if ($user_game) {
+			return $user_game->channel_id;
+		} else {
+			return '';
+		}
+	}
+
+	/**
+	 * 获取当前用户的角色
+	 * @return mixed
+	 */
+	public function getRole()
+	{
+		return $this->user()->roles()->first();
+	}
+
     /**
      * 获取当前用户可访问的角色
      * @return mixed
@@ -49,28 +74,33 @@ class AdminRepository
         return $can_roles;
     }
 
+	/**
+	 * 获取当前用户的直接下级角色
+	 * @return mixed
+	 */
+	public function getDirectDownRole()
+	{
+		$role = $this->user()->roles()->first();
+		$can_roles = Role::where('level', '>', $role->level)->first();
+		return $can_roles;
+	}
+
     /**
-     * 获取给定用户id的直接下级
-     * @param $user
+     * 获取当前用户的直接下级
      * @return mixed
      */
-    public function getDirectDownUser($user)
+    public function getDirectDownUsers()
     {
-        if (empty($user)) {
-            return null;
-        }
-        $user_id = is_numeric($user) ? $user : $user['id'];
-        return User::where('parent_id', '=', $user_id)->get();
+	    return $this->user()->getDirectDownUsers();
     }
 
     /**
      * 判断是否有直接儿子
-     * @param $user
      * @return bool
      */
-    public function hasDirectDownUser($user)
+    public function hasDirectDownUser()
     {
-        return boolval($this->getDirectDownUser($user));
+        return boolval($this->user()->getDirectDownUser());
     }
 
     /**
@@ -98,28 +128,4 @@ class AdminRepository
         }
         return false;
     }
-
-	/**
-	 * 获取所有下级用户
-	 * @param $user
-	 * @return array
-	 */
-	private function getChildrenUsers($user)
-	{
-		$direct_down_users = $this->getDirectDownUser($user)->toArray();
-		$down_users = array_merge([], $direct_down_users);
-		foreach ($direct_down_users as $direct_down_user) {
-			$d_user_1 = $this->getDirectDownUser($direct_down_user)->toArray();
-			$down_users = array_merge($down_users, $d_user_1);
-			foreach ($d_user_1 as $value_1) {
-				$d_user_2 = $this->getDirectDownUser($value_1)->toArray();
-				$down_users = array_merge($down_users, $d_user_2);
-				foreach ($d_user_2 as $value_2) {
-					$d_user_3 = $this->getDirectDownUser($value_2)->toArray();
-					$down_users = array_merge($down_users, $d_user_3);
-				}
-			}
-		}
-		return $down_users;
-	}
 }

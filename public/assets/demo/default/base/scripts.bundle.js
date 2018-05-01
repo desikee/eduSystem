@@ -1674,6 +1674,7 @@ jQuery.fn.extend({
 				return $.ajax(params)
 					.done(function (data, textStatus, jqXHR) {
 						// extendible data map callback for custom datasource in future
+                        datatable.responseData = data; // add by youyou
 						datatable.jsonData = dt.dataMapCallback(data);
 						$(datatable).trigger('m-datatable--on-ajax-done', datatable.jsonData);
 					})
@@ -3226,7 +3227,7 @@ jQuery.fn.extend({
 		// datasource definition
 		data: {
 			type: null,
-            method: 'GET',
+            method: 'POST',
             source: {
 				read: {
 					url: '',

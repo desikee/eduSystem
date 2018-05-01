@@ -194,7 +194,7 @@ var CustomFunction = function () {
                 index = $(this).attr('data-id');
 
             form.find('input').each(function(i, node) {
-                $(node).attr('value', (datatable.getColumnValue(index, $(this).attr('name'))));
+                $(node).val(datatable.getColumnValue(index, $(this).attr('name')));
             });
 
             var flavr = new $.flavr({
@@ -234,7 +234,7 @@ var CustomFunction = function () {
             var form = $('#flarv-dialog-new'),
                 index = $(this).attr('data-id');
             form.find('input').each(function(i, node) {
-                $(node).attr('value', (datatable.getColumnValue(index, $(this).attr('name'))));
+                $(node).val(datatable.getColumnValue(index, $(this).attr('name')));
             });
 
             var flavr = new $.flavr({
