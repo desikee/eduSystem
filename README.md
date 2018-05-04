@@ -1,2 +1,2 @@
 # train_company
-a training company web site
+a edu company web edu system
