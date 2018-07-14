@@ -52,4 +52,7 @@ class UserRepository extends AbstractRepository{
        $user =  $this->model->where(['username' => $username])->get();
         return $user->id;
     }
+    public function hasUser($username){
+	    return $this->model->where(['username'=> $username])->get() ? true : false;
+    }
 }

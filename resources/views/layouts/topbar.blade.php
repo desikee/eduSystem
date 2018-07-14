@@ -237,10 +237,10 @@
                 <a href="/admin/profile/index" class="m-nav__link m-dropdown__toggle" data-user_id="{{ Auth::getUser()->id }}" id="u-user">
                     <span class="m-topbar__userpic">
                         <img src="{{ Auth::getUser()->avatar }}" class="m--img-rounded m--marginless m--img-centered"
-                             alt="{{ Auth::getUser()->username }}" />
+                             alt="{{ Auth::getUser()->realname }}" />
                     </span>
                     <span class="m-topbar__username m--hide">
-                        Auth::getUser()->username
+                        Auth::getUser()->realname
                     </span>
                 </a>
                 <div class="m-dropdown__wrapper">
@@ -250,11 +250,11 @@
                         <div class="m-dropdown__header m--align-center" style="background: url(/assets/app/media/img/misc/user_profile_bg.jpg); background-size: cover;">
                             <div class="m-card-user m-card-user--skin-dark">
                                 <div class="m-card-user__pic">
-                                    <img src="{{ Auth::getUser()->avatar }}" class="m--img-rounded m--marginless" alt="{{ Auth::getUser()->username }}"/>
+                                    <img src="{{ Auth::getUser()->avatar }}" class="m--img-rounded m--marginless" alt="{{ Auth::getUser()->realname }}"/>
                                 </div>
                                 <div class="m-card-user__details">
                                     <span class="m-card-user__name m--font-weight-500">
-                                        {{ Auth::getUser()->username }}
+                                        {{ Auth::getUser()->realname }}
                                     </span>
                                     <a href="" class="m-card-user__email m--font-weight-300 m-link">
                                         {{ Auth::getUser()->email }}

@@ -56,6 +56,9 @@
                         required: true,
                         minlength:11,
                         maxlength:11
+                    },
+                    realname: {
+                        required:true
                     }
 
                 },
@@ -69,6 +72,9 @@
                         required: '请输入11位手机号',
                         minlength:'手机号为11位',
                         maxlenght:'手机号为11位'
+                    },
+                    realname:{
+                        required: '请输入真实姓名'
                     }
                 }
             });

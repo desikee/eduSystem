@@ -75,6 +75,16 @@
                                     <input class="form-control m-input" type="text" placeholder="请输入手机号" name="username">
                                 </div>
                             </div>
+
+
+                            <div class="form-group m-form__group row">
+                                <label for="realname" class="col-3 col-form-label">
+                                    姓名
+                                </label>
+                                <div class="col-6">
+                                    <input class="form-control m-input" type="text" placeholder="请输入真实姓名" name="realname">
+                                </div>
+                            </div>
                             <div class="form-group m-form__group row">
                                 <label for="password" class="col-3 col-form-label">
                                     初始密码
@@ -85,7 +95,7 @@
                             </div>
                             <div class="form-group m-form__group row">
                                 <label for="role" class="col-3 col-form-label">
-                                    用户身份
+                                    用户身份vie
                                 </label>
                                 <div class="col-6">
                                     <select class="form-control m-bootstrap-select m-bootstrap-select--solid u-search-select" name="role" id="u-role">

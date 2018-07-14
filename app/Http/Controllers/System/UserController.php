@@ -53,11 +53,15 @@ class UserController extends Controller
         $rules = [
             'username' => 'required|numeric',
             'password' => 'required|numeric',
+            'realname'=>'required|string',
             'status'=>'required|numeric'
         ];
         $validator = Validator::make($this->params, $rules);
         if ($validator->fails()) {
             $this->responseWithJsonFail($validator->errors()->messages());
+        }
+        if($this->repository->hasUser($this->params['username'])){
+            return $this->responseWithJsonFail('用户已存在');
         }
         $this->params['password'] = password_hash($this->params['password'], PASSWORD_DEFAULT);
         return $this->repository->add($this->params, $rules);
