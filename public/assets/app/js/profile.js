@@ -28,20 +28,40 @@ $('#form-update_profile-submit').on('click', function() {
     form_validate.validate({
         rules: {
             avatar: {
-                required: true,
+                required:true,
                 url: true
             },
-            company: {
+            realname: {
                 required: true
+            },
+            phone:{
+                required:true,
+                minlength:11,
+                maxlength:11
+
+            },
+            email:{
+                required:true,
+                email:true
             }
+
         },
         messages: {
             avatar: {
-                required: '请输入头像地址！',
+                required:'请输入头像地址',
                 url: '请输入正确的url地址'
             },
-            company: {
-                required: '请输入公司名称！'
+            realname: {
+                required: '请输入真实姓名！'
+            },
+            phone:{
+                required: '请输入11位手机号',
+                minlength:'手机号为11位',
+                maxlenght:'手机号为11位'
+            },
+            email:{
+                required:'请输入邮箱地址',
+                email:'邮箱格式不合法'
             }
         }
     });
@@ -73,11 +93,11 @@ $('#form-modify_password-submit').on('click', function() {
             },
             new_password: {
                 required: true,
-                minlength: 6
+                minlength: 8
             },
             confirm_password: {
                 required: true,
-                minlength: 6
+                minlength: 8
             }
         },
         messages: {
@@ -86,11 +106,11 @@ $('#form-modify_password-submit').on('click', function() {
             },
             new_password: {
                 required: '请输入新密码！',
-                minlength: '密码长度最少为6位'
+                minlength: '密码长度最少为8位'
             },
             confirm_password: {
                 required: '请输入重复密码',
-                minlength: '密码长度最少为6位'
+                minlength: '密码长度最少为8位'
             }
         }
     });
@@ -109,5 +129,34 @@ $('#form-modify_password-submit').on('click', function() {
             location.href = ret.data.redirect;
         }
         toastr.success("您已经成功修改密码", "修改成功");
+    })
+});
+
+$('#form-update_background-submit').on('click', function() {
+    var form_data = $('#form-update_background').serialize();
+
+    var form_validate = $('#form-update_background').closest('form');
+
+    form_validate.validate({
+        rules: {
+        },
+        messages: {
+
+        }
+    });
+
+    if (!form_validate.valid()) {
+        return false;
+    }
+
+    form_data += '&id=' + $('#u-user').attr('data-user_id');
+    $.post('update_background', form_data, function(ret) {
+        if (ret.code !== 0) {
+            toastr.error("更新资料失败: " + ret.message, "更新失败");
+            return false;
+        }
+
+        location.reload();
+        toastr.success("您已经成功更新了您的背景资料", "更新成功");
     })
 });

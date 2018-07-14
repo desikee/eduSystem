@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Train\TaskRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Repositories\Train\CourseRepository;
 
 /**
  * 已经结项学员管理
@@ -16,14 +17,15 @@ use Illuminate\Support\Facades\Validator;
 class StudentCompleteController extends Controller
 {
 
-	public function __construct(TaskRepository $repository, Request $request)
+	public function __construct(CourseRepository $repository, Request $request)
 	{
 		parent::__construct($repository, $request);
 	}
 
 	public function index()
 	{
-		return view('student.complete');
+	    $students = $this->repository->getCompleteStudent();
+		return view('student.complete', ['students'=>$students]);
 	}
 
 	public function getList()
@@ -38,7 +40,7 @@ class StudentCompleteController extends Controller
 		}
 
 		$query = $this->params['datatable']['query'] ?? [];
-		$queryColumn = ['school', 'major'];
+		$queryColumn = ['student_id'];
 		foreach ($query as $key => $value) {
 			// 过滤掉非允许查询字段以及空查询字段
 			if (!in_array($key, $queryColumn) || empty($value)){

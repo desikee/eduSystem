@@ -36,9 +36,10 @@ class TaskRepository extends AbstractRepository{
         ];
 	}
 
-	public function getList($query = [], $perpage, $page)
+	public function getProgressStudentList($query = [], $perpage, $page)
 	{
-	    $query['status'] = Task::STATUS_DETAIL['complete'];
+	    $query['status'] = Task::STATUS_DETAIL['default'];
+	    $query['teacher_id'] = Admin::user()->id;
 		$results = $this->model->where($query)->orderBy('id', 'desc')->get();
 		return $this->paginate(
             $results,
@@ -46,32 +47,39 @@ class TaskRepository extends AbstractRepository{
 		);
 	}
 
-    /**
-     * 获取结项学员列表
-     * @param array $query
-     * @param $perpage
-     * @param $page
-     * @return mixed
-     */
-	public function getCompleteStudentList($query = [], $perpage, $page)
-    {
-        $student_ids = $this->model->where(['teacher_id' => Admin::user()->id,
-            'status' => Task::STATUS_DETAIL['complete']])->get()->pluck('student_id');
-        return $this->paginate(
-            User::where($query)
-                ->whereIn('id', $student_ids)->get(),
-            $perpage, $page);
-    }
 
     public function getProgressStudent()
     {
-        $student_ids = $this->model->where(['teacher_id' => Admin::user()->id])
+        $student_ids = $this->model->where(['teacher_id' => Admin::user()->id,'status'=> Task::STATUS_DETAIL['create']])
             ->get()->pluck('student_id');
         return User::whereIn('id', $student_ids)->get();
     }
 
-	public function add($params, $rules = [])
-	{
 
-	}
+    public function addTask($params, $rules = []){
+	    $params['teacher_id'] = Admin::user()->id;
+
+
+	    $rules = [];
+	    return parent::add($params, $rules);
+    }
+
+    public function getStudentTaskList($query = [], $perpage, $page){
+        $query['status'] = Task::STATUS_DETAIL['default'];
+        $query['student_id'] = Admin::user()->id;
+        $results = $this->model->where($query)->orderBy('id', 'desc')->get();
+        return $this->paginate(
+            $results,
+            $perpage, $page
+        );
+    }
+
+    public function updateStatus($teacher_id, $student_id, $status){
+	    $tasks = $this->model->where(['teacher_id'=>$teacher_id, 'student_id'=>$student_id])->get();
+	    foreach ($tasks as $task){
+	        $task->status = $status;
+	        $task->save();
+        }
+    }
+
 }

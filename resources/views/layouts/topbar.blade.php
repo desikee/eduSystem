@@ -2,6 +2,7 @@
 <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
     <div class="m-stack__item m-topbar__nav-wrapper">
         <ul class="m-topbar__nav m-nav m-nav--inline">
+            <!--
             <li class="m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-center m-dropdown--mobile-full-width m-dropdown--skin-light	m-list-search m-list-search--skin-light"
                 data-dropdown-toggle="click" data-dropdown-persistent="true" id="m_quicksearch"
                 data-search-type="dropdown">
@@ -230,6 +231,7 @@
                     </div>
                 </div>
             </li>
+            -->
             <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img  m-dropdown m-dropdown--medium m-dropdown--arrow m-dropdown--header-bg-fill m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light"
                 data-dropdown-toggle="click">
                 <a href="/admin/profile/index" class="m-nav__link m-dropdown__toggle" data-user_id="{{ Auth::getUser()->id }}" id="u-user">
@@ -277,54 +279,10 @@
                                                     <span class="m-nav__link-text">
                                                         个人中心
                                                     </span>
-                                                    <span class="m-nav__link-badge">
-                                                        <span class="m-badge m-badge--success">
-                                                            2
-                                                        </span>
-                                                    </span>
+
                                                 </span>
                                             </span>
                                         </a>
-                                    </li>
-                                    <li class="m-nav__item">
-                                        <a href="#" class="m-nav__link">
-                                            <i class="m-nav__link-icon flaticon-share">
-                                            </i>
-                                            <span class="m-nav__link-text">
-                                                活动
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="m-nav__item">
-                                        <a href="#" class="m-nav__link">
-                                            <i class="m-nav__link-icon flaticon-chat-1">
-                                            </i>
-                                            <span class="m-nav__link-text">
-                                                消息
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="m-nav__separator m-nav__separator--fit">
-                                    </li>
-                                    <li class="m-nav__item">
-                                        <a href="#" class="m-nav__link">
-                                            <i class="m-nav__link-icon flaticon-info">
-                                            </i>
-                                            <span class="m-nav__link-text">
-                                                FAQ
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="m-nav__item">
-                                        <a href="#" class="m-nav__link">
-                                            <i class="m-nav__link-icon flaticon-lifebuoy">
-                                            </i>
-                                            <span class="m-nav__link-text">
-                                                Support
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="m-nav__separator m-nav__separator--fit">
                                     </li>
                                     <li class="m-nav__item">
                                         <a href="/admin/logout" class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">
@@ -337,15 +295,7 @@
                     </div>
                 </div>
             </li>
-            <!--
-            <li id="m_quick_sidebar_toggle" class="m-nav__item">
-                <a href="#" class="m-nav__link m-dropdown__toggle">
-                    <span class="m-nav__link-icon">
-                        <i class="flaticon-grid-menu"></i>
-                    </span>
-                </a>
-            </li>
-            -->
+
         </ul>
     </div>
 </div>

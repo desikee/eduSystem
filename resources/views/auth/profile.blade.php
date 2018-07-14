@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('script')
-    <script src="/assets/app/js/profile.js" type="text/javascript"></script>
+    <script src="{{URL::asset('assets/app/js/profile.js')}}" type="text/javascript"></script>
 @endsection
 
 @section('sub-header')
@@ -66,47 +66,47 @@
                                     真实姓名
                                 </label>
                                 <div class="col-8">
-                                    <input class="form-control m-input" type="text" value="" name="realname">
+                                    <input class="form-control m-input" type="text" value="{{Auth::getUser()->realname}}" name="realname">
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
-                                <label for="realname" class="col-3 col-form-label">
+                                <label for="school" class="col-3 col-form-label">
                                     学校
                                 </label>
                                 <div class="col-8">
-                                    <input class="form-control m-input" type="text" value="" name="realname">
+                                    <input class="form-control m-input" type="text" value="{{Auth::getUser()->school}}" name="school">
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
-                                <label for="realname" class="col-3 col-form-label">
+                                <label for="major" class="col-3 col-form-label">
                                     研究方向
                                 </label>
                                 <div class="col-8">
-                                    <input class="form-control m-input" type="text" value="" name="realname">
+                                    <input class="form-control m-input" type="text" value="{{Auth::getUser()->major}}" name="major">
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
-                                <label for="realname" class="col-3 col-form-label">
+                                <label for="qq" class="col-3 col-form-label">
                                     QQ号
                                 </label>
                                 <div class="col-8">
-                                    <input class="form-control m-input" type="text" value="" name="realname">
+                                    <input class="form-control m-input" type="text" value="{{Auth::getUser()->qq}}" name="qq">
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
-                                <label for="realname" class="col-3 col-form-label">
+                                <label for="weixin" class="col-3 col-form-label">
                                     微信号
                                 </label>
                                 <div class="col-8">
-                                    <input class="form-control m-input" type="text" value="" name="realname">
+                                    <input class="form-control m-input" type="text" value="{{Auth::getUser()->weixin}}" name="weixin">
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
-                                <label for="realname" class="col-3 col-form-label">
+                                <label for="phone" class="col-3 col-form-label">
                                     手机号
                                 </label>
                                 <div class="col-8">
-                                    <input class="form-control m-input" type="text" value="" name="realname">
+                                    <input class="form-control m-input" type="text" value="{{Auth::getUser()->phone}}" name="phone">
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
@@ -122,7 +122,7 @@
                                     头像地址
                                 </label>
                                 <div class="col-8">
-                                    <input class="form-control m-input" type="url" placeholder="http://dl.uu.cc/plugin/user/rumi.jpg" id="avatar" name="avatar">
+                                    <input class="form-control m-input" type="url" value="{{Auth::getUser()->avatar}}" placeholder="http://dl.uu.cc/plugin/user/rumi.jpg" name="avatar">
                                 </div>
                             </div>
                         </div>
@@ -145,60 +145,9 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
-                <div class="m-portlet m-portlet--tab">
-                    <div class="m-portlet__head">
-                        <div class="m-portlet__head-caption">
-                            <div class="m-portlet__head-title">
-                            <span class="m-portlet__head-icon m--hide">
-                                <i class="la la-gear"></i>
-                            </span>
-                                <h3 class="m-portlet__head-text">
-                                    修改研究背景
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                    <!--begin::Form-->
-                    <form class="m-form m-form--fit m-form--label-align-right" id="form-update_profile">
-                        <div class="m-portlet__body">
-                            <div class="form-group m-form__group">
-                                <label for="exampleTextarea">
-                                    论文经历
-                                </label>
-                                <textarea class="form-control m-input" id="exampleTextarea" rows="7"></textarea>
-                            </div>
-                            <div class="form-group m-form__group">
-                                <label for="exampleTextarea">
-                                    科研经历
-                                </label>
-                                <textarea class="form-control m-input" id="exampleTextarea" rows="7"></textarea>
-                            </div>
-                            <div class="form-group m-form__group">
-                                <label for="exampleTextarea">
-                                    个人优势
-                                </label>
-                                <textarea class="form-control m-input" id="exampleTextarea" rows="7"></textarea>
-                            </div>
-                        </div>
-                        <div class="m-portlet__foot m-portlet__foot--fit">
-                            <div class="m-form__actions">
-                                <div class="row">
-                                    <div class="col-3"></div>
-                                    <div class="col-8">
-                                        <button type="button" class="btn btn-success" id="form-update_profile-submit">
-                                            确定
-                                        </button>
-                                        <button type="reset" class="btn btn-secondary">
-                                            重置
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+
+
+
         </div>
     </div>
 @endsection

@@ -9,7 +9,7 @@ class Task extends Model{
     const STATUS_DETAIL = [
         'create' => 0,
         'default' => 0,
-        'complete' => 3
+        'complete' => 1
     ];
 
 	protected $table = 'task';

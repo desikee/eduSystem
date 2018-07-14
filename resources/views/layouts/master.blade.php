@@ -81,7 +81,7 @@
                         " id="m_aside_header_menu_mobile_close_btn">-->
                         <!--<i class="la la-close"></i>-->
                         <!--</button>-->
-                    @include('layouts.horizontal_menu')
+
                     <!-- END: Horizontal Menu -->
                         <!-- BEGIN: Topbar -->
                     @include('layouts.topbar')
@@ -130,6 +130,7 @@
 
     <!-- begin::Quick Sidebar -->
     @include('layouts.quick_sidebar')
+
     <!-- end::Quick Sidebar -->
 
     <!--begin::Base Scripts -->

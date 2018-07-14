@@ -38,7 +38,7 @@ var CustomFunction = function () {
                 type: 'remote',
                 source: {
                     read: {
-                        url: 'getList'
+                        url: 'getProgressList'
                     }
                 },
                 pageSize: 10,
@@ -145,11 +145,13 @@ var CustomFunction = function () {
             }, 500);
         }).val(query.usernameSearch);
 
+
         // 初始化选择框
         var student_selectpicker = $('#u-student-search-select').selectpicker(),
             select_option = $('#u-student-search-select option[value=' + student_selectpicker.val() + ']');
         $('#u-current-student-button').text(select_option.text());
 
+        var choosedStudent;
         // 为每个搜索选择框添加查询事件
         $('.u-search-select').each(function() {
             var query_field = $(this).attr('name');
@@ -158,6 +160,7 @@ var CustomFunction = function () {
                 {
                     return false;
                 }
+                choosedStudent = $(this).val();
                 var query = datatable.getDataSourceQuery();
                 query[query_field] = $(this).val();
                 select_option = $('#u-student-search-select option[value=' + $(this).val() + ']');
@@ -193,27 +196,26 @@ var CustomFunction = function () {
             modal = $('#u-modal'),
             form_validate = modal_form.validate({
                 rules: {
-                    username: {
+                    teacher_task: {
                         required: true
                     },
-                    company: {
+                    student_task: {
                         required: true
                     },
-                    email: {
+                    take_time: {
                         required: true,
-                        email: true
                     }
                 },
                 messages: {
-                    username: {
-                        required: '请输入用户名！'
+                    teacher_task: {
+                        required: '请输入导师任务！'
                     },
-                    company: {
-                        required: '请输入用户所在公司！'
+                    student_task: {
+                        required: '请输入学生任务！'
                     },
-                    email: {
-                        required: '请输入邮箱地址！',
-                        email: '请输入合法的邮箱地址呢！'
+                    take_time: {
+                        required: '请输入学习时长！'
+
                     }
                 }
             });
@@ -235,7 +237,7 @@ var CustomFunction = function () {
         // 点击新增按钮处理
         $('.m-content').on('click', '.u-btn-new', function() {
             modal_title.text(select_option.text() + '-新增任务');
-
+         //   var index = $(this).attr('data-id');
             form_validate.resetForm();
             // 初始化值
             modal_form.find('input').each(function(i, node) {
@@ -245,9 +247,16 @@ var CustomFunction = function () {
             // 写入提交地址为新增
             modal_submit.attr('data-url', 'add');
             modal_submit.attr('data-text', '新增');
+            modal_submit.attr('data-student-id', choosedStudent);
+            /*
+            document.write('输出：');
+            document.write(choosedStudent);
+            exit();
+            */
+        //    modal_submit.attr('data-id', 100);
 
             // 初始化渠道选择框
-            $('#u-form-channel_id').selectpicker();
+        //    $('#u-form-channel_id').selectpicker();
             modal.modal('show');
         });
 
@@ -280,8 +289,14 @@ var CustomFunction = function () {
                 var form_data = modal_form.serialize(),
                     text = modal_submit.attr('data-text'),
                     url = modal_submit.attr('data-url');
-                form_data += '&id=' + $(this).attr('data-id');
-                form_data += '&game_id=' + $('#u-current-game').attr('data-game_id');
+                if(url === 'edit') {
+                    form_data += '&id=' + $(this).attr('data-id');
+                }
+                if(url === 'add'){
+                    form_data += '&student_id=' + $(this).attr('data-student-id');
+                }
+             //   form_data += '&game_id=' + $('#u-current-game').attr('data-game_id');
+
                 $.post(url, form_data, function(ret){
                     if (ret.code !== 0) {
                         toastr.error('该记录' + text + '失败: ' + ret.message, text + '失败');

@@ -36,6 +36,9 @@ class User extends Authenticatable
 		'role_name', 'parent_user'
 	];
 
+	public static function getIDByUsername($username){
+	    return User::where(['username'=> $username])->first()->pluck('username');
+    }
 	/**
 	 * 添加获取角色名属性
 	 */

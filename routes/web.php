@@ -31,10 +31,14 @@ Route::group(['middleware' => ['auth', 'log'], 'prefix' => 'admin', 'as' => 'adm
 
     Route::group(['prefix' => 'profile', 'as' => 'profile', 'namespace' => 'Auth'], function() {
         Route::get('index', 'ProfileController@index');
+        Route::get('background', 'ProfileController@background');
         Route::get('password', 'ProfileController@password');
         Route::post('modify_password', 'ProfileController@modify_password');
         Route::post('update_profile', 'ProfileController@update_profile');
+        Route::post('update_background', 'ProfileController@update_background');
     });
+
+
 
     Route::group(['prefix' => 'system', 'as' => 'system.', 'namespace' => 'System'], function() {
         // 用户管理相关路由
@@ -46,96 +50,23 @@ Route::group(['middleware' => ['auth', 'log'], 'prefix' => 'admin', 'as' => 'adm
             Route::post('delete', ['as' => 'delete', 'uses' => 'UserController@delete']);
         });
 
-        // 权限管理相关路由
-        Route::group(['prefix' => 'permission', 'as' => 'permission.'], function() {
-            Route::get('index', ['as' => 'index', 'uses' => 'PermissionController@index']);
-            Route::post('add', ['as' => 'add', 'uses' => 'PermissionController@add']);
-            Route::post('edit', ['as' => 'edit', 'uses' => 'PermissionController@edit']);
-            Route::post('delete', ['as' => 'delete', 'uses' => 'PermissionController@delete']);
+        // 项目管理相关路由
+        Route::group(['prefix' => 'subject', 'as' => 'subject.'], function() {
+            Route::get('index', ['as' => 'index', 'uses' => 'SubjectController@index']);
+            Route::get('update', ['as' => 'update', 'uses' => 'SubjectController@update']);
+            Route::post('update_course', ['as' => 'update_course', 'uses' => 'SubjectController@update_course']);
+            Route::match(['get', 'post'], 'getList', ['as'=>'getList', 'uses'=>'SubjectController@getList']);
+            Route::post('addSubject', ['as' => 'addSubject', 'uses' => 'SubjectController@add']);
+            Route::post('edit', ['as' => 'edit', 'uses' => 'SubjectController@edit']);
+            Route::post('delete', ['as' => 'delete', 'uses' => 'SubjectController@delete']);
         });
 
-        // 角色管理相关路由
-        Route::group(['prefix' => 'role', 'as' => 'role.'], function() {
-            Route::get('index', ['as' => 'index', 'uses' => 'RoleController@index']);
-            Route::post('add', ['as' => 'add', 'uses' => 'RoleController@add']);
-            Route::post('edit', ['as' => 'edit', 'uses' => 'RoleController@edit']);
-            Route::post('delete', ['as' => 'delete', 'uses' => 'RoleController@delete']);
-            Route::get('getPermissionTree', ['as' => 'getPermissionTree', 'uses' => 'RoleController@getPermissionTree']);
-            Route::get('getCurrentRole', ['as' => 'getCurrentRole', 'uses' => 'RoleController@getCurrentRole']);
-        });
-    });
-
-
-	// 地推管理相关路由
-    Route::group(['prefix' => 'promotion', 'as' => 'promotion.', 'namespace' => 'Promotion'], function () {
-	    Route::group(['prefix' => 'link', 'as' => 'link.'], function() {
-		    Route::get('index', ['as' => 'index', 'uses' => 'PromotionLinkController@index']);
-		    Route::match(['get', 'post'], 'getList', ['as' => 'getList', 'uses' => 'PromotionLinkController@getList']);
-		    Route::post('add', ['as' => 'add', 'uses' => 'PromotionLinkController@add']);
-		    Route::post('edit', ['as' => 'edit', 'uses' => 'PromotionLinkController@edit']);
-		    Route::post('delete', ['as' => 'add', 'uses' => 'PromotionLinkController@delete']);
-	    });
-
-	    Route::group(['prefix' => 'company', 'as' => 'company.'], function() {
-		    Route::get('index', ['as' => 'index', 'uses' => 'PromotionCompanyController@index']);
-		    Route::get('getChannel', ['as' => 'getChannel', 'uses' => 'PromotionCompanyController@getChannel']);
-		    Route::match(['get', 'post'], 'getList', ['as' => 'getList', 'uses' => 'PromotionCompanyController@getList']);
-		    Route::post('add', ['as' => 'add', 'uses' => 'PromotionCompanyController@add']);
-            Route::post('edit', ['as' => 'edit', 'uses' => 'PromotionCompanyController@edit']);
-            Route::post('reset', ['as' => 'reset', 'uses' => 'PromotionCompanyController@reset']);
-		    Route::post('delete', ['as' => 'delete', 'uses' => 'PromotionCompanyController@delete']);
-	    });
-
-	    Route::group(['prefix' => 'agent', 'as' => 'agent.'], function() {
-		    Route::get('index', ['as' => 'index', 'uses' => 'PromotionAgentController@index']);
-		    Route::match(['get', 'post'], 'getList', ['as' => 'getList', 'uses' => 'PromotionAgentController@getList']);
-		    Route::post('add', ['as' => 'add', 'uses' => 'PromotionAgentController@add']);
-		    Route::post('edit', ['as' => 'edit', 'uses' => 'PromotionAgentController@edit']);
-		    Route::post('reset', ['as' => 'reset', 'uses' => 'PromotionAgentController@reset']);
-		    Route::post('delete', ['as' => 'delete', 'uses' => 'PromotionAgentController@delete']);
-	    });
-
-	    Route::group(['prefix' => 'person', 'as' => 'person.'], function() {
-		    Route::get('index', ['as' => 'index', 'uses' => 'PromotionPersonController@index']);
-		    Route::match(['get', 'post'], 'getList', ['as' => 'getList', 'uses' => 'PromotionPersonController@getList']);
-		    Route::post('add', ['as' => 'add', 'uses' => 'PromotionPersonController@add']);
-		    Route::post('edit', ['as' => 'edit', 'uses' => 'PromotionPersonController@edit']);
-		    Route::post('reset', ['as' => 'reset', 'uses' => 'PromotionPersonController@reset']);
-		    Route::post('delete', ['as' => 'delete', 'uses' => 'PromotionPersonController@delete']);
-	    });
-
-	    Route::group(['prefix' => 'support', 'as' => 'support.'], function() {
-		    Route::get('index', ['as' => 'index', 'uses' => 'PromotionSupportController@index']);
-		    Route::match(['get', 'post'], 'getList', ['as' => 'getList', 'uses' => 'PromotionSupportController@getList']);
-		    Route::post('add', ['as' => 'add', 'uses' => 'PromotionSupportController@add']);
-		    Route::post('edit', ['as' => 'edit', 'uses' => 'PromotionSupportController@edit']);
-		    Route::post('reset', ['as' => 'reset', 'uses' => 'PromotionSupportController@reset']);
-		    Route::post('delete', ['as' => 'delete', 'uses' => 'PromotionSupportController@delete']);
-	    });
-
-	    Route::group(['prefix' => 'statistics', 'as' => 'statistics.'], function() {
-		    Route::get('index', ['as' => 'index', 'uses' => 'PromotionStatisticsController@index']);
-		    Route::match(['get', 'post'], 'getList', ['as' => 'getList', 'uses' => 'PromotionStatisticsController@getList']);
-		    Route::match(['get', 'post'], 'getListTotal', ['as' => 'getListTotal', 'uses' => 'PromotionStatisticsController@getListTotal']);
-	    });
-
-	    Route::group(['prefix' => 'reward', 'as' => 'reward.'], function() {
-		    Route::get('index', ['as' => 'index', 'uses' => 'PromotionRewardController@index']);
-		    Route::match(['get', 'post'], 'getList', ['as' => 'getList', 'uses' => 'PromotionRewardController@getList']);
-		    Route::post('add', ['as' => 'add', 'uses' => 'PromotionRewardController@add']);
-		    Route::post('edit', ['as' => 'edit', 'uses' => 'PromotionRewardController@edit']);
-		    Route::post('reset', ['as' => 'reset', 'uses' => 'PromotionRewardController@reset']);
-		    Route::post('delete', ['as' => 'delete', 'uses' => 'PromotionRewardController@delete']);
-	    });
-    });
-
-    Route::group(['prefix' => 'game', 'as' => 'game.', 'namespace' => 'Game'], function() {
-        Route::group(['prefix' => 'config', 'as' => 'config.'], function() {
-            Route::get('index', ['as' => 'index', 'uses' => 'GameConfigController@index']);
-            Route::match(['get', 'post'], 'getList', ['as' => 'getList', 'uses' => 'GameConfigController@getList']);
-            Route::post('add', ['as' => 'add', 'uses' => 'GameConfigController@add']);
-            Route::post('edit', ['as' => 'edit', 'uses' => 'GameConfigController@edit']);
-            Route::post('delete', ['as' => 'add', 'uses' => 'GameConfigController@delete']);
+        // 渠道管理相关路由
+        Route::group(['prefix' => 'support', 'as' => 'support.'], function() {
+            Route::get('index', ['as' => 'index', 'uses' => 'SupportController@index']);
+            Route::post('add', ['as' => 'add', 'uses' => 'SupportController@add']);
+            Route::post('edit', ['as' => 'edit', 'uses' => 'SupportController@edit']);
+            Route::post('delete', ['as' => 'delete', 'uses' => 'SupportController@delete']);
         });
     });
 
@@ -143,10 +74,10 @@ Route::group(['middleware' => ['auth', 'log'], 'prefix' => 'admin', 'as' => 'adm
     Route::group(['prefix' => 'student', 'as' => 'student.', 'namespace' => 'Student'], function() {
         Route::group(['prefix' => 'progress', 'as' => 'progress.'], function() {
             Route::get('index', ['as' => 'index', 'uses' => 'StudentProgressController@index']);
-            Route::match(['get', 'post'], 'getList', ['as' => 'getList', 'uses' => 'StudentProgressController@getList']);
-            Route::post('add', ['as' => 'add', 'uses' => 'StudentProgressController@add']);
+            Route::match(['get', 'post'], 'getProgressList', ['as' => 'getProgressList', 'uses' => 'StudentProgressController@getProgressList']);
             Route::post('edit', ['as' => 'edit', 'uses' => 'StudentProgressController@edit']);
-            Route::post('delete', ['as' => 'add', 'uses' => 'StudentProgressController@delete']);
+            Route::post('delete', ['as' => 'delete', 'uses' => 'StudentProgressController@delete']);
+            Route::post('add', ['as' => 'add', 'uses' => 'StudentProgressController@add']);
         });
 
         Route::group(['prefix' => 'complete', 'as' => 'complete.'], function() {
@@ -154,8 +85,14 @@ Route::group(['middleware' => ['auth', 'log'], 'prefix' => 'admin', 'as' => 'adm
             Route::match(['get', 'post'], 'getList', ['as' => 'getList', 'uses' => 'StudentCompleteController@getList']);
             Route::post('add', ['as' => 'add', 'uses' => 'StudentCompleteController@add']);
             Route::post('edit', ['as' => 'edit', 'uses' => 'StudentCompleteController@edit']);
-            Route::post('delete', ['as' => 'add', 'uses' => 'StudentCompleteController@delete']);
+            Route::post('delete', ['as' => 'delete', 'uses' => 'StudentCompleteController@delete']);
         });
+    });
+
+    //课题管理路由
+    Route::group(['prefix'=>'course', 'as'=>'course', 'namespace'=>'Course'], function (){
+       Route::get('index', ['as'=>'index', 'uses'=> 'CourseController@index']);
+       Route::match(['get', 'post'], 'getList', ['as' => 'getList', 'uses' => 'CourseController@getList']);
     });
 
 });

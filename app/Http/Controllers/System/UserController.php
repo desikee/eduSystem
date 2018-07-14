@@ -3,6 +3,7 @@
 namespace app\Http\Controllers\System;
 
 use App\Http\Controllers\Controller;
+use App\Model\Admin\Role;
 use App\Repositories\Admin\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -17,11 +18,10 @@ class UserController extends Controller
 	}
 
     public function index() {
-	    $search_select = $this->repository->getSearchSelect();
-        return view('system.user.index', [
-	        'search_select' => $search_select
-        ]);
+
+        return view('system.user.index');
     }
+
 
 	public function getList() {
 		$rules = [
@@ -50,8 +50,18 @@ class UserController extends Controller
 	}
 
     public function add() {
-        echo 'add';
-        return;
+        $rules = [
+            'username' => 'required|numeric',
+            'password' => 'required|numeric',
+            'status'=>'required|numeric'
+        ];
+        $validator = Validator::make($this->params, $rules);
+        if ($validator->fails()) {
+            $this->responseWithJsonFail($validator->errors()->messages());
+        }
+        $this->params['password'] = password_hash($this->params['password'], PASSWORD_DEFAULT);
+        return $this->repository->add($this->params, $rules);
+
     }
 
     public function edit() {

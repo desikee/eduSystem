@@ -5,12 +5,12 @@
             <div class="m-stack__item m-stack__item--left m-stack__item--middle m-stack__item--last">
                 <span class="m-footer__copyright">
                     Copyright &copy; 2018
-                    <a href="http://desikee.com/" class="m-link">
+                    <a href="http://binshin.com/" class="m-link">
                         毕昇教育
                     </a>
                     ,Powered By
                     <a href="http://uusama.com" class="m-link">
-                        uusama
+                        uusama & xiaofan
                     </a>
                 </span>
             </div>

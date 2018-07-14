@@ -30,12 +30,22 @@ class ProfileController extends Controller
     {
         return view('auth.password');
     }
+    public function background()
+    {
+        return view('auth.background');
+    }
 
 	public function update_profile() {
         $rules = [
             'id' => 'required|numeric',
-            'avatar' => 'required|string|url',
-            'company' => 'required|string',
+            'email' => 'required|string|email',
+            'realname'=> 'required|string',
+            'phone'=>'required|numeric',
+            'school'=>'string',
+            'major'=>'string',
+            'qq'=>'numeric',
+            'weixin'=>'string',
+            'avatar'=>'string|url',
         ];
         $validator = Validator::make($this->params, $rules);
         if ($validator->fails()) {
@@ -47,6 +57,27 @@ class ProfileController extends Controller
         return $this->responseWithJsonFail($this->repository->getErrorMessage());
 	}
 
+	public function update_background(){
+
+        $rules = [
+            'id' => 'required|numeric',
+            'paper'=>'required|string',
+            'research'=>'required|string',
+            'advance'=> 'required|string',
+        ];
+        $validator = Validator::make($this->params, $rules);
+        if($validator->fails()){
+            $this->responseWithJsonFail($validator->errors()->messages());
+        }
+        $user = $this->repository->find($this->params['id']);
+        if(empty($user)){
+            return $this->responseWithJsonFail('未找到该用户');
+        }
+        if($this->repository->edit($this->params, $rules)){
+            return $this->responseWithJsonSuccess();
+        }
+        return $this->responseWithJsonFail($this->repository->getErrorMessage());
+    }
     public function modify_password() {
         $rules = [
             'id' => 'required|numeric',

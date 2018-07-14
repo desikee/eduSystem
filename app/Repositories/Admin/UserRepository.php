@@ -47,4 +47,9 @@ class UserRepository extends AbstractRepository{
 			User::where([])->groupBy('parent_id')->get(['parent_id']))->get(['id', 'username'])->toArray();
 		return $search_select;
 	}
+
+	public  function getUserIDByUsername($username){
+       $user =  $this->model->where(['username' => $username])->get();
+        return $user->id;
+    }
 }

@@ -1,11 +1,7 @@
 @extends('layouts.master')
 
-@section('stylesheet')
-    <link href="/assets/app/css/custom.css" rel="stylesheet" type="text/css">
-@endsection
-
 @section('script')
-    <script src="{{URL::asset('assets/app/js/system/user.js')}}" type="text/javascript"></script>
+    <script src="{{URL::asset('assets/app/js/profile.js')}}" type="text/javascript"></script>
 @endsection
 
 @section('sub-header')
@@ -13,7 +9,7 @@
         <div class="d-flex align-items-center">
             <div class="mr-auto">
                 <h3 class="m-subheader__title m-subheader__title--separator">
-                    用户管理
+                    个人中心
                 </h3>
                 <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                     <li class="m-nav__item m-nav__item--home">
@@ -27,17 +23,7 @@
                     <li class="m-nav__item">
                         <a href="" class="m-nav__link">
                         <span class="m-nav__link-text">
-                            系统管理
-                        </span>
-                        </a>
-                    </li>
-                    <li class="m-nav__separator">
-                        -
-                    </li>
-                    <li class="m-nav__item">
-                        <a href="" class="m-nav__link">
-                        <span class="m-nav__link-text">
-                            用户注册
+                            修改研究背景
                         </span>
                         </a>
                     </li>
@@ -50,7 +36,7 @@
 @section('content')
     <div class="m-content">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <div class="m-portlet m-portlet--tab">
                     <div class="m-portlet__head">
                         <div class="m-portlet__head-caption">
@@ -59,50 +45,40 @@
                             <i class="la la-gear"></i>
                         </span>
                                 <h3 class="m-portlet__head-text">
-                                    填写用户信息
+                                    修改研究背景
                                 </h3>
                             </div>
                         </div>
                     </div>
                     <!--begin::Form-->
-                    <form class="m-form m-form--fit m-form--label-align-right" id="form-register_user">
+                    <form class="m-form m-form--fit m-form--label-align-right" id="form-update_background">
                         <div class="m-portlet__body">
-                            <div class="form-group m-form__group row">
-                                <label for="username" class="col-3 col-form-label">
-                                    用户名
-                                </label>
-                                <div class="col-6">
-                                    <input class="form-control m-input" type="text" placeholder="请输入手机号" name="username">
+                            <div class="form-group m-form__group ">
+                                <div >
+                                    论文经历
                                 </div>
+                                <textarea class="form-control m-input"  rows="7" value="{{Auth::getUser()->paper}}" name="paper"></textarea>
                             </div>
-                            <div class="form-group m-form__group row">
-                                <label for="password" class="col-3 col-form-label">
-                                    初始密码
+                            <div class="form-group m-form__group ">
+                                <label for="research" class=" col-form-label">
+                                    科研经历
                                 </label>
-                                <div class="col-6">
-                                    <input class="form-control m-input" type="password" placeholder="请输入手机号" name="password">
-                                </div>
+                                <textarea class="form-control m-input"  rows="7" value="{{Auth::getUser()->research}}" name="research"></textarea>
                             </div>
-                            <div class="form-group m-form__group row">
-                                <label for="role" class="col-3 col-form-label">
-                                    用户身份
+                            <div class="form-group m-form__group ">
+                                <label for="advance" class=" col-form-label">
+                                    个人特长
                                 </label>
-                                <div class="col-6">
-                                    <select class="form-control m-bootstrap-select m-bootstrap-select--solid u-search-select" name="role" id="u-role">
+                                <textarea class="form-control m-input"  rows="7" value="{{Auth::getUser()->advance}}" name="advance"></textarea>
+                            </div>
 
-                                        <option value="0">学员</option>
-                                        <option value="3">导师</option>
-                                        <option value="7">管理员</option>
-                                    </select>
-                                </div>
-                            </div>
                         </div>
                         <div class="m-portlet__foot m-portlet__foot--fit">
                             <div class="m-form__actions">
                                 <div class="row">
                                     <div class="col-3"></div>
-                                    <div class="col-8">
-                                        <button type="button" class="btn btn-success" id="form-register_user-submit">
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-success"  id="form-update_background-submit">
                                             确定
                                         </button>
                                         <button type="reset" class="btn btn-secondary">
@@ -117,8 +93,4 @@
             </div>
         </div>
     </div>
-
-
-
-
 @endsection
