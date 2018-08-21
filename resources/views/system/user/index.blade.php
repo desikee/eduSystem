@@ -95,7 +95,7 @@
                             </div>
                             <div class="form-group m-form__group row">
                                 <label for="role" class="col-3 col-form-label">
-                                    用户身份vie
+                                    用户身份
                                 </label>
                                 <div class="col-6">
                                     <select class="form-control m-bootstrap-select m-bootstrap-select--solid u-search-select" name="role" id="u-role">
