@@ -139,9 +139,26 @@ $('#form-update_background-submit').on('click', function() {
 
     form_validate.validate({
         rules: {
+            paper: {
+                required: true
+            },
+            research: {
+                required: true
+            },
+            advance: {
+                required: true
+            }
         },
         messages: {
-
+            paper:{
+                required: '论文经历必填'
+            },
+            research: {
+                required: '科研经历必填'
+            },
+            advance: {
+                required: '特长必填'
+            }
         }
     });
 
