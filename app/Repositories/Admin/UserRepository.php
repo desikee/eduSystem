@@ -55,4 +55,12 @@ class UserRepository extends AbstractRepository{
     public function hasUser($username){
 	    return $this->model->where(['username'=> $username])->get() ? true : false;
     }
+    public function getBackground($userID){
+	    $user = $this->model->where(['id'=> $userID])->get();
+	    $background = [];
+	    $background['paper'] = $user->paper;
+	    $background['research'] = $user->research;
+	    $background['advance'] = $user->advance;
+	    return $background;
+    }
 }

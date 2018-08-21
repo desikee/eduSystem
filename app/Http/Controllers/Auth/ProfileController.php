@@ -32,7 +32,10 @@ class ProfileController extends Controller
     }
     public function background()
     {
-        return view('auth.background');
+        $background = $this->repository->getBackground(Auth::getUser()->id);
+        return view('auth.background',[
+            'background'=>$background
+        ]);
     }
 
 	public function update_profile() {
