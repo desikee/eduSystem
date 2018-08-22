@@ -2,6 +2,9 @@
 
 @section('script')
     <script src="{{URL::asset('assets/app/js/profile.js')}}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $('#paper_text').val({{$background['paper']}});
+    </script>
 @endsection
 
 @section('sub-header')
