@@ -3,7 +3,10 @@
 @section('script')
     <script src="{{URL::asset('assets/app/js/profile.js')}}" type="text/javascript"></script>
     <script type="text/javascript">
-        $('#paper_text').val({{$background['paper']}});
+        var paper_val = $('#paper_text_p').text(),
+            research_val = $('#research_text_p').text(),
+            advance_val = $('#advance_text_p').text();
+        $('#paper_text').val(paper_val);
     </script>
 @endsection
 
@@ -55,7 +58,9 @@
                     </div>
                     <!--begin::Form-->
                     <div>
-                        <p>{{$background['paper']}}</p>
+                        <p id="paper_text_p" style="display: none">{{$background['paper']}}</p>
+                        <p id="research_text_p" style="display: none">{{$background['research']}}</p>
+                        <p id="advance_text_p" style="display: none">{{$background['advance']}}</p>
                     </div>
                     <form class="m-form m-form--fit m-form--label-align-right" id="form-update_background">
                         <div class="m-portlet__body">
