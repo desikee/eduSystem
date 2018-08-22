@@ -57,19 +57,19 @@
                                 <div >
                                     论文经历
                                 </div>
-                                <textarea class="form-control m-input"  rows="7" value="{{$background['paper']}}" name="paper"></textarea>
+                                <textarea class="form-control m-input"  rows="7" id="paper_text" name="paper"></textarea>
                             </div>
                             <div class="form-group m-form__group ">
                                 <label for="research" class=" col-form-label">
                                     科研经历
                                 </label>
-                                <textarea class="form-control m-input"  rows="7" value="{{$background['research']}}" name="research"></textarea>
+                                <textarea class="form-control m-input"  rows="7" id="research_text" name="research"></textarea>
                             </div>
                             <div class="form-group m-form__group ">
                                 <label for="advance" class=" col-form-label">
                                     个人特长
                                 </label>
-                                <textarea class="form-control m-input"  rows="7" value="{{$background['advance']}}" name="advance"></textarea>
+                                <textarea class="form-control m-input"  rows="7" id="advance_text" name="advance"></textarea>
                             </div>
 
                         </div>

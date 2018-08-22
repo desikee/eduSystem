@@ -21,6 +21,9 @@ toastr.options = {
     "hideMethod": "fadeOut"
 };
 
+$('#paper_text').ready(function(){
+   this.val("test paper");
+});
 $('#form-update_profile-submit').on('click', function() {
     var form_data = $('#form-update_profile').serialize();
 
