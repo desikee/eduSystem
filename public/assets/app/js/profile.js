@@ -21,6 +21,13 @@ toastr.options = {
     "hideMethod": "fadeOut"
 };
 
+//show textarea
+var paper_val = $('#paper_text_p').text(),
+    research_val = $('#research_text_p').text(),
+    advance_val = $('#advance_text_p').text();
+$('#paper_text').val(paper_val);
+$('#research_text').val(research_val);
+$('#advance_text').val(advance_val);
 
 $('#form-update_profile-submit').on('click', function() {
     var form_data = $('#form-update_profile').serialize();
